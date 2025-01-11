@@ -2,7 +2,9 @@ name: Update README
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight UTC
+    # Run at 00:00 and 12:00 UTC every day
+    - cron: '0 0 * * *' # Midnight UTC
+    - cron: '0 12 * * *' # Noon UTC
   workflow_dispatch: # Allows manual trigger
 
 jobs:
@@ -12,8 +14,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GH_TOKEN }} # Use the PAT for authentication
 
       - name: Print Current Working Directory
         run: pwd
@@ -32,7 +32,7 @@ jobs:
       - name: Push Changes
         run: |
           git config --global user.name "Aloffawy"
-          git config --global user.email "your_email@example.com"
+          git config --global user.email "razaqameen01@gmail.com"
           git add README.md
           git commit -m "Automated update"
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/aloffawy/daily-alert.git HEAD:main
